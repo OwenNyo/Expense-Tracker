@@ -1,6 +1,6 @@
 💰 Expense Tracker (MERN Stack)
-A full-stack Expense Tracker application built using the MERN (MongoDB, Express, React, Node.js) stack.
-Track your income, expenses, and balance in real-time with an intuitive dashboard and persistent storage.
+- A full-stack Expense Tracker application built using the MERN (MongoDB, Express, React, Node.js) stack.
+- Track your income, expenses, and balance in real-time with an intuitive dashboard and persistent storage.
 
 ✨ Features
 - 📊 Real-time expense tracking – Add, edit, and delete transactions
