@@ -12,8 +12,8 @@
 - 📈 Dashboard – Visualize spending with charts
 
 🛠️ Tech Stack
-Frontend: React, Context API / Redux, Axios, Chart.js
-Backend: Node.js, Express.js
-Database: MongoDB (Mongoose ODM)
-Authentication: JWT + bcrypt
-Other Tools: ESLint, Prettier, dotenv
+- Frontend: React, Context API / Redux, Axios, Chart.js
+- Backend: Node.js, Express.js
+- Database: MongoDB (Mongoose ODM)
+- Authentication: JWT + bcrypt
+- Other Tools: ESLint, Prettier, dotenv
