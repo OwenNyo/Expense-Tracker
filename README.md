@@ -17,3 +17,5 @@
 - Database: MongoDB (Mongoose ODM)
 - Authentication: JWT + bcrypt
 - Other Tools: ESLint, Prettier, dotenv
+
+Feel free to commit and help out!
