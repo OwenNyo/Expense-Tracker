@@ -26,7 +26,7 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
     }
 
     const filename = req.file.filename;                // e.g. "171...-cat1.jpg"
-    const relativePath = `https://expense-tracker-production-2a11.up.railway.app/uploads/${filename}`;       // store/render this
+    const relativePath = `${process.env.CLIENT_URL}/uploads/${filename}`;       // store/render this
 
     // Construct URL to access uploaded image
     res.status(200).json({ relativePath });
