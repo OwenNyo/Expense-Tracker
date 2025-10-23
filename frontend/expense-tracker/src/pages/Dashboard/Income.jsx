@@ -5,10 +5,13 @@ import axiosInstance from '../../utils/axiosInstance';
 import Modal from "../../components/Modal"
 import AddIncomeForm from '../../components/Income/AddIncomeForm';
 import { API_PATHS } from '../../utils/apiPaths';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import DeleteAlert from '../../components/DeleteAlert'
+import { useUserAuth } from '../../hooks/useUserAuth';
+import IncomeList from '../../components/Income/IncomeList';
 
 const Income = () => {
+  useUserAuth();
 
   const [incomeData, setIncomeData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,7 +20,7 @@ const Income = () => {
     data: null,
   });
 
-  const[openAddIncomeModal, setOpenAddIncomeModal] = useState(true)
+  const[openAddIncomeModal, setOpenAddIncomeModal] = useState(false)
 
   // Get All Income Details
   const fetchIncomeDetails = async () => {
@@ -77,10 +80,43 @@ const Income = () => {
   };
 
   // Delete Income
-  const deleteIncome = async (id) => {};
+  const deleteIncome = async (id) => {
+    try {
+      await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id));
+
+      setOpenDeleteAlert({ show: false, data: null });
+      toast.success("Income deleted successfully.");
+      fetchIncomeDetails();
+    } catch (error) {
+      console.error("Error deleting income:", error.response?.data?.message || error.message);
+    }
+  };
 
   // Handle download income details
-  const handleDownloadIncomeDetails = async () => {};
+  const handleDownloadIncomeDetails = async () => {
+    try {
+      const response = await axiosInstance.get(
+        API_PATHS.INCOME.DOWNLOAD_INCOME,
+        {
+          responseType: "blob",
+        }
+      );
+
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "income_details.csv");
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading income details:", error);
+      toast.error("Failed to download income details. Please try again.");
+    }
+  };
+
 
   useEffect(() => {
     fetchIncomeDetails();
@@ -115,6 +151,17 @@ const Income = () => {
         >
           <AddIncomeForm onAddIncome={handleAddIncome} />
         </Modal>
+
+        <Modal
+          isOpen={openDeleteAlert.show}
+          onClose={() => setOpenDeleteAlert({ show: false, data: null})}
+          title="Delete Income"
+          >
+            <DeleteAlert
+              content="Are you sure you want to delete this income?"
+              onDelete={() => deleteIncome(openDeleteAlert.data)}
+            />
+          </Modal>
       </div>
     </DashboardLayout>
   )
