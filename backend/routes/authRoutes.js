@@ -20,17 +20,15 @@ router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
 
 // Handle image upload (expects 'image' field in form-data)
-router.post("/upload-image", upload.single("image"), (req, res) => { 
-    if (!req.file) {
-        return res.status(400).json({ message: "No file uploaded" });
-    }
+router.post("/upload-image", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "No file uploaded" });
+  }
 
-    const filename = req.file.filename;                // e.g. "171...-cat1.jpg"
-    const relativePath = `${process.env.CLIENT_URL}/uploads/${filename}`;       // store/render this
-    console.log("Uploaded file URL:", relativePath);
+  // Cloudinary returns file info in req.file.path
+  const imageUrl = req.file.path;
 
-    // Construct URL to access uploaded image
-    res.status(200).json({ relativePath });
+  res.status(200).json({ imageUrl });
 });
 
 module.exports = router;
