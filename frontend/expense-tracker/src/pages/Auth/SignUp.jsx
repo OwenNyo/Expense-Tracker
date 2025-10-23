@@ -55,6 +55,7 @@ const SignUp = () => {
         const imgUploadRes = await uploadImage(profilePic);
         profileImageUrl = imgUploadRes.relativePath || "";
       }
+      console.log("Profile Image URL:", profileImageUrl);
       const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         fullName,
         email,
