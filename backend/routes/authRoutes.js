@@ -25,9 +25,11 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
         return res.status(400).json({ message: "No file uploaded" });
     }
 
+    const filename = req.file.filename;                // e.g. "171...-cat1.jpg"
+    const relativePath = `/uploads/${filename}`;       // store/render this
+
     // Construct URL to access uploaded image
-    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
-    res.status(200).json({ imageUrl });
+    res.status(200).json({ relativePath });
 });
 
 module.exports = router;
