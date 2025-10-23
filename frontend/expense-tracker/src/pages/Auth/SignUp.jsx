@@ -53,7 +53,7 @@ const SignUp = () => {
 
       if (profilePic){
         const imgUploadRes = await uploadImage(profilePic);
-        profileImageUrl = imgUploadRes.imageUrl || "";
+        profileImageUrl = imgUploadRes.relativePath || "";
       }
       const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         fullName,
@@ -119,8 +119,8 @@ const SignUp = () => {
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
           {/* Submit button */}
-          <button type="submit" className="btn-primary">
-            SIGN UP
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? "Signing up..." : "SIGN UP"}
           </button>
 
           {/* Redirect to login */}
